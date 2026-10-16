@@ -31,6 +31,16 @@ app.get('/db-check', async (req, res)=> {
 });
 
 
+app.get('/users', async (req, res)=>{
+    try{
+        const result = await pool.query('SELECT id, email, name FROM users ORDER BY id');
+        res.json(result.rows);
+    } catch(err){
+        console.log(err);
+        res.status(500).json({error: err.message});
+    }
+});
+
 
 app.listen(PORT, ()=> {
     console.log(`Server running on port ${PORT}`);
