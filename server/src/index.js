@@ -3,6 +3,9 @@ import express from 'express';
 import pool from './db.js';
 import cors from 'cors';
 
+import { requireUser } from './middleware/auth.js';
+
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -39,6 +42,11 @@ app.get('/users', async (req, res)=>{
         console.log(err);
         res.status(500).json({error: err.message});
     }
+});
+
+
+app.get('/me', requireUser, (req, res)=> {
+    res.json(req.user);
 });
 
 
