@@ -4,6 +4,7 @@ import pool from './db.js';
 import cors from 'cors';
 
 import { requireUser } from './middleware/auth.js';
+import  projectsRouter from './routes/projects.js';
 
 
 const app = express();
@@ -49,6 +50,7 @@ app.get('/me', requireUser, (req, res)=> {
     res.json(req.user);
 });
 
+app.use('/projects', requireUser, projectsRouter);
 
 app.listen(PORT, ()=> {
     console.log(`Server running on port ${PORT}`);
